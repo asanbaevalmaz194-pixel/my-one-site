@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NORDEN — Магазин одежды</title>
+<style>
+:root{--ink:#191919;--paper:#f7f6f3;--line:#e5e2dc}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;background:var(--paper);color:var(--ink)}
+button,input,select{font:inherit}button,a{cursor:pointer}a{color:inherit;text-decoration:none}
+header{height:72px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 7%;position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}
+.logo{font-size:25px;font-weight:bold;letter-spacing:5px}.logo small{display:block;font-size:9px;letter-spacing:2px;color:#777;margin-top:4px}
+nav{display:flex;gap:24px;font-size:13px}.actions{display:flex;gap:14px}.actions button{background:none;border:0;font-size:20px;position:relative}
+#count{font-size:10px;background:#191919;color:#fff;border-radius:50%;padding:3px 6px;position:absolute;top:-8px;right:-10px}
+.hero{min-height:440px;padding:70px 9%;display:flex;align-items:center;color:white;background:linear-gradient(90deg,#111c,#1113),url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1600&q=85') center 35%/cover}
+.hero div{max-width:550px}.eyebrow{text-transform:uppercase;letter-spacing:3px;font-size:11px;margin-bottom:20px}.hero h1{font:normal clamp(42px,6vw,68px)/1.08 Georgia,serif;margin-bottom:20px}.hero p{line-height:1.8;color:#eee;font-size:14px}
+.btn{display:inline-block;border:1px solid #191919;background:#191919;color:#fff;padding:13px 20px;font-size:12px}.btn:hover{background:#444}.light{background:white;color:#191919;border-color:white;margin-top:25px}
+.benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:25px 7%;background:white}.benefits strong{display:block;font-size:12px;margin-bottom:5px}.benefits span{font-size:11px;color:#777}
+main{max-width:1200px;margin:auto;padding:45px 24px}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}h2{font:normal 30px Georgia,serif}
+.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:55px}.category{height:210px;position:relative;overflow:hidden;cursor:pointer}.category img{width:100%;height:100%;object-fit:cover}.category:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#0009)}.category b{position:absolute;bottom:18px;left:15px;color:#fff;z-index:1}
+#search{width:100%;padding:13px;border:1px solid var(--line);margin-bottom:15px;background:white}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}.filter{padding:10px 15px;border:1px solid #ddd;background:transparent;font-size:12px}.filter.active{background:#191919;color:#fff}
+.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.product{background:white;border:1px solid var(--line);min-width:0}.photo{position:relative;background:#eee}.photo img{width:100%;height:250px;object-fit:cover;display:block}.tag{position:absolute;top:10px;left:10px;background:white;padding:5px 8px;font-size:10px}.fav{position:absolute;right:10px;top:10px;border:0;border-radius:50%;width:30px;height:30px;background:white;font-size:18px}.info{padding:13px}.info h3{font-size:13px;font-weight:500;margin-bottom:8px}.muted{font-size:11px;color:#777;margin-bottom:10px}.price{font-size:14px;font-weight:bold}.info .btn{width:100%;text-align:center;margin-top:13px;padding:11px}
+.promo{margin-top:50px;padding:35px;color:white;background:linear-gradient(90deg,#111e,#1115),url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1300&q=80') center/cover}.promo p{line-height:1.8;margin-top:10px}
+footer{background:#191919;color:white;padding:40px 7% 20px}.footgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;margin-bottom:30px}footer h3{font-size:12px;margin-bottom:12px}footer p,footer a{font-size:12px;color:#bbb;line-height:2}.copyright{border-top:1px solid #444;padding-top:18px;font-size:10px;color:#aaa}
+.overlay,.modal{display:none;position:fixed;inset:0;background:#0008;z-index:10}.overlay.show{display:block}.drawer{position:fixed;z-index:11;right:-440px;top:0;height:100vh;width:min(420px,100%);background:#fff;padding:24px;overflow:auto;transition:right .25s}.drawer.open{right:0}.row{display:flex;gap:12px;padding:15px 0;border-bottom:1px solid #eee}.row img{width:75px;height:90px;object-fit:cover}.row .grow{flex:1}.row button{margin:8px 5px 0 0;padding:5px 9px;background:white;border:1px solid #ddd}.modal{align-items:center;justify-content:center;padding:15px}.modal.show{display:flex}.box{background:white;width:min(470px,100%);max-height:90vh;overflow:auto;padding:25px}.box input,.box select{width:100%;padding:12px;margin:6px 0 14px;border:1px solid #ddd}.box label{font-size:12px}.close{float:right;border:0;background:none;font-size:25px}.total{display:flex;justify-content:space-between;margin:20px 0}.full{width:100%;text-align:center}.note{font-size:11px;color:#777;line-height:1.6;margin-top:12px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#191919;color:white;padding:13px 18px;display:none;z-index:20;font-size:12px}
+@media(max-width:800px){nav{gap:10px}.benefits{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.categories{grid-template-columns:repeat(2,1fr)}.photo img{height:220px}}
+@media(max-width:560px){header{padding:0 4%}.logo{font-size:20px}nav{display:none}.hero{min-height:400px;padding:40px 7%}.hero h1{font-size:43px}main{padding:35px 13px}.category{height:160px}.photo img{height:190px}.footgrid{grid-template-columns:1fr 1fr}.benefits{padding:20px 5%;gap:18px 10px}}
+</style>
+</head>
+<body>
+<header>
+<a href="#" class="logo">NORDEN<small>STYLE IN EVERY DETAIL</small></a>
+<nav><a href="#home">Главная</a><a href="#catalog">Каталог</a><a href="#about">О магазине</a><a href="#contacts">Контакты</a></nav>
+<div class="actions"><button id="searchBtn" aria-label="Поиск">⌕</button><button id="favBtn" aria-label="Избранное">♡</button><button id="cartBtn" aria-label="Корзина">🛍<span id="count">0</span></button></div>
+</header>
+<section class="hero" id="home"><div><div class="eyebrow">Новая коллекция · 2026</div><h1>Стиль — это<br>просто быть собой.</h1><p>Минимализм, комфорт и вещи, которые подходят именно тебе. Открой свою новую коллекцию.</p><a href="#catalog" class="btn light">Смотреть коллекцию →</a></div></section>
+<section class="benefits" id="about"><div>♧ <strong>Быстрая доставка</strong><span>По Кыргызстану</span></div><div>◇ <strong>Удобная оплата</strong><span>При получении заказа</span></div><div>↻ <strong>Лёгкий возврат</strong><span>Уточняется при покупке</span></div><div>♡ <strong>Поддержка</strong><span>Всегда на связи</span></div></section>
+<main>
+<section><div class="head"><h2>Категории</h2><span class="muted">Найди свой стиль</span></div><div class="categories">
+<div class="category" data-cat="Мужское"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80" alt="Мужская одежда"><b>Мужская одежда →</b></div>
+<div class="category" data-cat="Женское"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=600&q=80" alt="Женская одежда"><b>Женская одежда →</b></div>
+<div class="category" data-cat="Обувь"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" alt="Обувь"><b>Обувь →</b></div>
+<div class="category" data-cat="Аксессуары"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" alt="Аксессуары"><b>Аксессуары →</b></div></div></section>
+<section id="catalog"><div class="head"><h2>Наш каталог</h2><span id="result" class="muted"></span></div><input id="search" placeholder="Поиск товаров..." aria-label="Поиск товаров"><div class="filters">
+<button class="filter active" data-filter="Все">Все товары</button><button class="filter" data-filter="Мужское">Мужское</button><button class="filter" data-filter="Женское">Женское</button><button class="filter" data-filter="Обувь">Обувь</button><button class="filter" data-filter="Аксессуары">Аксессуары</button></div><div id="products" class="products"></div></section>
+<section class="promo"><div class="eyebrow">Специальное предложение</div><h2>Меньше лишнего.<br>Больше твоего.</h2><p>Скидка 10% на первую покупку.<br>Промокод: NORDEN10</p><a href="#catalog" class="btn light">Выбрать товары →</a></section>
+</main>
+<footer id="contacts"><div class="footgrid"><div><div class="logo">NORDEN</div><p>Одежда, отражающая тебя.</p></div><div><h3>НАВИГАЦИЯ</h3><p><a href="#home">Главная</a><br><a href="#catalog">Каталог</a><br><a href="#about">О магазине</a></p></div><div><h3>КОНТАКТЫ</h3><p>Кыргызстан, Бишкек<br>Добавь свой номер телефона<br>Добавь свою почту</p></div></div><div class="copyright">© 2026 NORDEN. Демонстрационный интернет-магазин.</div></footer>
+<div class="overlay" id="overlay"></div><aside class="drawer" id="drawer"><button class="close" id="closeCart">×</button><h2>Твоя корзина</h2><div id="cartItems"></div><div id="cartBottom"></div></aside>
+<div class="modal" id="checkout"><div class="box"><button class="close" id="closeCheckout">×</button><h2>Оформление заказа</h2><p class="muted">Заполни данные покупателя.</p><form id="orderForm">
+<label>Имя и фамилия *</label><input name="name" required minlength="2" placeholder="Твоё имя">
+<label>Телефон *</label><input name="phone" required type="tel" placeholder="+996 700 123 456">
+<label>Город *</label><select name="city" required><option value="">Выбери город</option><option>Бишкек</option><option>Ош</option><option>Каракол</option><option>Другой город</option></select>
+<label>Адрес доставки *</label><input name="address" required placeholder="Улица, дом">
+<div id="summary"></div><button class="btn full" type="submit">Подтвердить заказ</button><p class="note">Демо-режим: заказ сохранится в этом браузере, но не будет отправлен продавцу. Для настоящих заказов нужен сервер или сервис обработки форм.</p></form></div></div><div class="toast" id="toast"></div>
+<script>
+const items=[
+[1,"Худи Essential","Мужское",3200,"Хит","https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=600&q=80","Мягкий хлопок, свободный крой."],
+[2,"Футболка Basic","Мужское",1500,"База","https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80","Футболка на каждый день."],
+[3,"Куртка Urban","Мужское",4800,"Новинка","https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80","Лёгкая городская куртка."],
+[4,"Спортивные штаны","Мужское",2800,"","https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=600&q=80","Комфортная посадка."],
+[5,"Кроссовки Classic","Обувь",5500,"Хит","https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80","Универсальная пара на каждый день."],
+[6,"Свитер Soft","Женское",3500,"","https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=600&q=80","Мягкий свитер."],
+[7,"Сумка Minimal","Аксессуары",2400,"","https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80","Сумка с лаконичным дизайном."],
+[8,"Часы Classic","Аксессуары",4200,"Новинка","https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80","Стильный аксессуар."],
+[9,"Платье Everyday","Женское",3900,"","https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&w=600&q=80","Платье для разных случаев."],
+[10,"Рубашка Relax","Мужское",2700,"","https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=80","Рубашка свободного кроя."],
+[11,"Кеды Daily","Обувь",3900,"","https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=600&q=80","Лёгкие кеды для прогулок."],
+[12,"Кепка N","Аксессуары",1200,"","https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=600&q=80","Завершающий акцент образа."]
+].map(x=>({id:x[0],name:x[1],cat:x[2],price:x[3],tag:x[4],img:x[5],desc:x[6]}));
+const $=id=>document.getElementById(id), money=n=>n.toLocaleString("ru-RU")+" сом";
+let cart={},favs=[],filter="Все",onlyFav=false;
+try{cart=JSON.parse(localStorage.getItem("norden-cart"))||{};favs=JSON.parse(localStorage.getItem("norden-favs"))||[]}catch(e){}
+function save(){try{localStorage.setItem("norden-cart",JSON.stringify(cart));localStorage.setItem("norden-favs",JSON.stringify(favs))}catch(e){}}
+function toast(s){$("toast").textContent=s;$("toast").style.display="block";setTimeout(()=>$("toast").style.display="none",2400)}
+function render(){
+ const q=$("search").value.toLowerCase();
+ const list=items.filter(p=>(filter==="Все"||p.cat===filter)&&(!onlyFav||favs.includes(p.id))&&(p.name+" "+p.cat).toLowerCase().includes(q));
+ $("result").textContent=list.length+" товаров";
+ $("products").innerHTML=list.map(p=>`<article class="product"><div class="photo"><img loading="lazy" src="${p.img}" alt="${p.name}">${p.tag?`<span class="tag">${p.tag}</span>`:""}<button class="fav" data-fav="${p.id}">${favs.includes(p.id)?"♥":"♡"}</button></div><div class="info"><h3>${p.name}</h3><p class="muted">${p.cat}</p><span class="price">${money(p.price)}</span><button class="btn" style="display:block" data-add="${p.id}">＋ В корзину</button></div></article>`).join("")||"<p>Товары не найдены.</p>";
+ renderCart();
+}
+function total(){return items.reduce((s,p)=>s+p.price*(cart[p.id]||0),0)}
+function qty(){return Object.values(cart).reduce((s,n)=>s+n,0)}
+function renderCart(){
+ $("count").textContent=qty();
+ const list=items.filter(p=>cart[p.id]);
+ $("cartItems").innerHTML=list.length?list.map(p=>`<div class="row"><img src="${p.img}" alt="${p.name}"><div class="grow"><b>${p.name}</b><p style="margin-top:8px">${money(p.price)}</p><button data-minus="${p.id}">−</button>${cart[p.id]}<button data-plus="${p.id}">+</button><button data-remove="${p.id}">Удалить</button></div></div>`).join(""):"<p style='padding:35px 0;color:#777'>Корзина пока пуста.</p>";
+ $("cartBottom").innerHTML=list.length?`<div class="total"><span>Итого</span><b>${money(total())}</b></div><button class="btn full" id="checkoutBtn">Оформить заказ →</button>`:"";
+}
+function openCart(){$("overlay").classList.add("show");$("drawer").classList.add("open")}
+function closeCart(){$("overlay").classList.remove("show");$("drawer").classList.remove("open")}
+function setFilter(v){filter=v;onlyFav=false;document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b.dataset.filter===v));render();$("catalog").scrollIntoView({behavior:"smooth"})}
+document.addEventListener("click",e=>{
+ let t=e.target.closest("button,[data-cat]");
+ if(!t)return;
+ if(t.dataset.add){cart[t.dataset.add]=(cart[t.dataset.add]||0)+1;save();render();toast("Товар добавлен в корзину")}
+ if(t.dataset.fav){let id=+t.dataset.fav;favs=favs.includes(id)?favs.filter(x=>x!==id):[...favs,id];save();render()}
+ if(t.dataset.filter)setFilter(t.dataset.filter);
+ if(t.dataset.cat)setFilter(t.dataset.cat);
+ if(t.dataset.plus){cart[t.dataset.plus]++;save();render()}
+ if(t.dataset.minus){cart[t.dataset.minus]--;if(cart[t.dataset.minus]<=0)delete cart[t.dataset.minus];save();render()}
+ if(t.dataset.remove){delete cart[t.dataset.remove];save();render()}
+ if(t.id==="cartBtn")openCart();
+ if(t.id==="closeCart")closeCart();
+ if(t.id==="checkoutBtn"){closeCart();$("summary").innerHTML=`<p class="total">Товаров: ${qty()} · Итого: <b>${money(total())}</b></p>`;$("checkout").classList.add("show")}
+ if(t.id==="closeCheckout")$("checkout").classList.remove("show");
+});
+$("overlay").onclick=closeCart;
+$("search").addEventListener("input",render);
+$("searchBtn").onclick=()=>{$("catalog").scrollIntoView({behavior:"smooth"});$("search").focus()};
+$("favBtn").onclick=()=>{onlyFav=!onlyFav;filter="Все";document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b.dataset.filter==="Все"));render();$("catalog").scrollIntoView({behavior:"smooth"});if(onlyFav)toast("Избранные товары")};
+$("checkout").addEventListener("click",e=>{if(e.target===$("checkout"))$("checkout").classList.remove("show")});
+$("orderForm").addEventListener("submit",e=>{
+ e.preventDefault();if(!qty())return toast("Корзина пуста");
+ const order={number:"ND-"+Date.now().toString().slice(-7),customer:Object.fromEntries(new FormData(e.target)),items:items.filter(p=>cart[p.id]).map(p=>({name:p.name,quantity:cart[p.id],price:p.price})),total:total(),date:new Date().toISOString()};
+ try{let orders=JSON.parse(localStorage.getItem("norden-orders")||"[]");orders.push(order);localStorage.setItem("norden-orders",JSON.stringify(orders))}catch(err){return toast("Не удалось сохранить заказ")}
+ cart={};save();render();$("checkout").classList.remove("show");e.target.reset();toast("Заказ "+order.number+" создан в демо-режиме");
+});
+render();
+</script>
+</body>
+</html>
